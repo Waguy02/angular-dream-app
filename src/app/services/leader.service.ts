@@ -4,7 +4,7 @@ import {Leader} from '../shared/leader';
 @Injectable({
   providedIn: 'root'
 })
-export class LeaderServiceService {
+export class LeaderService {
 
 
   constructor() { }
