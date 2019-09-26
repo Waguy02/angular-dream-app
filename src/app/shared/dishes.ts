@@ -10,9 +10,9 @@ export const DISHES: Dish[] = [
         label: 'Hot',
         price: '4.99',
         // tslint:disable-next-line:max-line-length
-        description: "A unique combination of Indian Uthappam (pancake) and Italian pizza,  topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.",
-        comments: [
-       0     {
+        description: 'A unique combination of Indian Uthappam (pancake) and Italian pizza topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.',
+        comment: [
+            {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
                 author: 'John Lemon',
@@ -53,7 +53,7 @@ export const DISHES: Dish[] = [
         label: '',
         price: '1.99',
         description: 'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce',
-        comments: [
+        comment: [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
@@ -95,7 +95,7 @@ export const DISHES: Dish[] = [
         label: 'New',
         price: '1.99',
         description: 'A quintessential ConFusion experience, is it a vada or is it a donut?',
-        comments: [
+        comment: [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
@@ -137,7 +137,7 @@ export const DISHES: Dish[] = [
         label: '',
         price: '2.99',
         description: 'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms',
-        comments: [
+        comment: [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
