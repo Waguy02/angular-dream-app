@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Leader} from '../shared/leader';
+import  {LEADERS} from '../shared/leader';
+
 
 @Component({
   selector: 'app-about',
@@ -8,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class AboutComponent implements OnInit {
 
   constructor() { }
+
+  leaders:Leader[]=LEADERS;
 
   ngOnInit() {
   }
