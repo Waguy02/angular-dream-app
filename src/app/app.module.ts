@@ -29,6 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms'; 
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -42,14 +43,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    MatSelectModule,
-    MatSlideToggleModule,
-    LoginComponent  ,
-    ReactiveFormsModule  
+    LoginComponent  
+  
     
   ],
   imports: [
-       
+    MatSelectModule,
+    MatSlideToggleModule,
+
     MatFormFieldModule, 
     MatInputModule,
     MatCheckboxModule,
@@ -64,6 +65,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   MatCardModule,
   AppRoutingModule,
   MatDialogModule,
+  ReactiveFormsModule, 
   MatButtonModule
 
   ],
