@@ -3,7 +3,7 @@ import {Leader} from '../shared/leader';
 import  {LEADERS} from '../shared/leader';
 import { DishService } from '../services/dish.service';
 import { DISHES } from '../shared/dishes';
-
+import{LeaderService} from '../services/leader.service';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -11,13 +11,12 @@ import { DISHES } from '../shared/dishes';
 })
 export class AboutComponent implements OnInit {
 dishes=DISHES;
-  constructor(private dishService: DishService) { }
+  constructor(private leaderService: LeaderService) { }
     
-  leaders:Leader[]=LEADERS;
+  leaders:Leader[];
 
   ngOnInit() {
-    this.dishService.getDishes()
-    .then(dishes => this.dishes = dishes);
+    this.leaderService.getLeaders().then(leaders=>this.leaders=leaders);
   }
 
 }
