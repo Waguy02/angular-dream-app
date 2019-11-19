@@ -9,6 +9,7 @@ import { switchMap } from 'rxjs/operators';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import{ DISHES} from '../shared/dishes';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 const DISH = {
     id: '0',
@@ -60,6 +61,21 @@ const DISH = {
   templateUrl: './dishdetail.component.html',
   
   styleUrls: ['./dishdetail.component.css']
+  ,
+  animations: [
+    trigger('visibility', [
+        state('shown', style({
+            transform: 'scale(1.0)',
+            opacity: 1
+        })),
+        state('hidden', style({
+            transform: 'scale(0.5)',
+            opacity: 0
+        })),
+        transition('* => *', animate('0.5s ease-in-out'))
+    ])
+  ]
+  
 })
 
 
@@ -70,6 +86,7 @@ const DISH = {
 
 export class DishdetailComponent implements OnInit {
 
+  visibility = 'shown';
     @ViewChild('fform',null) commentFormDirective;
 
     setPrevNext(dishId: string) {
@@ -88,8 +105,11 @@ export class DishdetailComponent implements OnInit {
         },  errmess => this.errMess = <any>errmess);
 
         this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-        this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-                .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+        this.route.params.pipe(switchMap((params: Params) => {this.visibility="hidden"; return this.dishservice.getDish(params['id'])}
+        
+         ))
+        
+        .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); this.visibility = 'shown';});
   
 
 
