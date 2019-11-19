@@ -76,7 +76,7 @@ import { HttpClientModule } from '@angular/common/http';
   entryComponents: [
     LoginComponent
 ],
-  providers: [DishService,PromotionService,LeaderService,{provide: 'BaseURL', useValue: baseURL},], 
+  providers: [DishService,PromotionService,LeaderService,{provide: 'baseURL', useValue: baseURL},], 
   bootstrap: [AppComponent],
   
 })

@@ -16,19 +16,17 @@ import { FormsModule } from '@angular/forms';
 
 
 export class MenuComponent implements OnInit {
-
   
 
-  
-  selectedDish:Dish;
+  dishes:Dish[];
+ 
   
 
 
   constructor(private dishService: DishService, @Inject('baseURL') private baseURL)  { }
   ngOnInit() {
-  //this.dishService.getDishes().subscribe(dishes => this.dishes = dishes);
+    this.dishService.getDishes().subscribe(dishes => this.dishes = dishes);
   }
-
 
 
 
