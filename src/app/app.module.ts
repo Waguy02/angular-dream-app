@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import{BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import{MatToolbarModule} from '@angular/material/toolbar';
-
+import { baseURL } from './shared/baseurl';
 import {FlexLayoutModule} from '@angular/flex-layout'
 import { AppComponent } from './app.component';
 import { MatListModule } from '@angular/material/list';
@@ -29,9 +29,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms'; 
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import {MatSliderModule} from '@angular/material'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     MatSelectModule,
     MatSlideToggleModule,
-
+    MatSliderModule,
     MatFormFieldModule, 
     MatInputModule,
     MatCheckboxModule,
@@ -69,13 +70,14 @@ import { ReactiveFormsModule } from '@angular/forms';
   ReactiveFormsModule, 
   MatButtonModule,
   MatProgressSpinnerModule,
-
+  HttpClientModule,
   ],
 
   entryComponents: [
     LoginComponent
 ],
-  providers: [DishService,PromotionService,LeaderService], 
-  bootstrap: [AppComponent]
+  providers: [DishService,PromotionService,LeaderService,{provide: 'BaseURL', useValue: baseURL},], 
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

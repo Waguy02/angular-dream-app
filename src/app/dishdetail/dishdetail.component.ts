@@ -1,10 +1,14 @@
 import { Dish } from '../shared/dish';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChild,Inject } from '@angular/core';
 import { DishService } from '../services/dish.service';
 
+import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
+import { Feedback, ContactType } from '../shared/feedback';
+import {Comment } from '../shared/comment';
 import { switchMap } from 'rxjs/operators';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import{ DISHES} from '../shared/dishes';
 
 const DISH = {
     id: '0',
@@ -57,37 +61,184 @@ const DISH = {
   
   styleUrls: ['./dishdetail.component.css']
 })
+
+
+
+
+
+
+
 export class DishdetailComponent implements OnInit {
+
+    @ViewChild('fform',null) commentFormDirective;
+
+    setPrevNext(dishId: string) {
+        const index = this.dishIds.indexOf(dishId);
+        this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
+        this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
+      }
+        
+
+    ngOnInit() {
+        const id = +this.route.snapshot.params['id'];
+
+        this.dishservice.getDish(id).subscribe(dish =>{ this.dish = dish});
+
+        this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+        this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
+                .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+  
+
+
+       
+    
+    }
+
+
+    
+
     dish: Dish;
     dishIds:string[];
     prev:any;
     next:any;
+    commentForm:FormGroup;
+    previewComment:Comment
+    
+    formErrors = {
+        'author': '',
+        'rating': '',
+        'comment': ''
+      };
+    
+      validationMessages = {
+        'author': {
+          'required':      'First Name is required.',
+          'minlength':     'First Name must be at least 2 characters long.',
+          'maxlength':     'author cannot be more than 25 characters long.'
+        },
 
+        'rating': {
+          'required':      'Tel. number is required.',
+          
+        },
+        'comment': {
+          'required':    'Your comment is required',
+          
+        },
+      };
+    
+    
 
     constructor(private dishservice: DishService,
       private route: ActivatedRoute,
-      private location: Location) { }
+      private location: Location,private fb: FormBuilder,
+      @Inject('baseURL') private baseURL 
+      ) { 
+
+        this.createForm();
+
+      }
   
 
+    
 
+      createForm() {
+   
+        this.commentForm = this.fb.group({
+          author: ['', [Validators.required, Validators.minLength(2)] ],
+          rating: ['5', [Validators.required] ],
+          comment: ['', [Validators.required] ],
+        });
+    
+    
+        this.commentForm.valueChanges
+          .subscribe(data => this.onValueChanged(data));
+    
+        this.onValueChanged(); // (re)set validation messages now
+        
+        
+    
+    
+      }
+
+      onValueChanged(data?: any) {
+          
+        if (!this.commentForm) { return; }
+        const form = this.commentForm;
+       var isValid:boolean=true;
+
+       
+        for (const field in this.formErrors) {
+          if (this.formErrors.hasOwnProperty(field)) {
+            // clear previous error message (if any)
+             
+
+            this.formErrors[field] = '';
+            const control = form.get(field);
+            if (control && control.dirty && !control.valid) {
+                isValid=false;
+                const messages = this.validationMessages[field];
+              for (const key in control.errors) {
+                if (control.errors.hasOwnProperty(key)) {
+                  this.formErrors[field] += messages[key] + ' ';
+                }
+              }
+            }
+        }}
+
+          if(isValid){
+
+            console.log("Commentaire valide, affichage de la prévisualisation ...");
+            this.previewComment={
+            author:this.commentForm.get('author').value,
+            rating:this.commentForm.get('rating').value,
+            comment:this.commentForm.get('comment').value,
+            date:''
+                            }
+
+        
+          }
+          else{
+
+            console.log("Commentaire invalide ");
+              this.previewComment=undefined;
+          }
+
+          
+
+        
+      }
+    
+      onSubmit() {
+        this.previewComment = this.commentForm.value;
+
+        this.previewComment.date=String(new Date());
+        console.log(this.previewComment);
+        
+        this.dish.comment.push(this.previewComment);
+        console.log(this.dish.comment);
+
+
+        this.commentForm.reset({
+          author: '',
+          rating:'',
+          comment: ''
+        });
+        
+        this.commentFormDirective.resetForm();
+        alert("Votre Commentaire a été posté avec succès; Nous vous en remercions!")
+        
+      }
       
-  setPrevNext(dishId: string) {
-    const index = this.dishIds.indexOf(dishId);
-    this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
-    this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
-  }
-    ngOnInit() {
-      const id = +this.route.snapshot.params['id'];
+    
 
-      this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-      this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
-    }
-  
-    goBack(): void {
-      this.location.back();
-    }
-  
+
+
+
+
+
+
+
 
 
 };
