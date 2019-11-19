@@ -33,6 +33,7 @@ import {MatSliderModule} from '@angular/material'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HighlightDirective } from './directives/highlight.directive';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { HttpClientModule } from '@angular/common/http';
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LoginComponent  
+    LoginComponent,
+    HighlightDirective  
   
     
   ],
