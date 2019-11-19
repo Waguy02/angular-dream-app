@@ -7,6 +7,6 @@ export class Dish {
     featured: boolean;
     label: string;
     price: string;
-    comment:Comment[];
+    comments:Comment[];
     description: string;
 }

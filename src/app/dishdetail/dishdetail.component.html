@@ -36,7 +36,7 @@ fxLayoutGap.xs="0">
         <h3>{{dish.name | uppercase}}</h3>
       </mat-card-title>
     </mat-card-header>
-    <img mat-card-image src={{baseUrl+dish.image}} alt={{dish.name}}>
+    <img mat-card-image src={{baseURL+dish.image}} alt={{dish.name}}>
     <mat-card-content>
       <p>{{dish.description}} </p>
     </mat-card-content>
@@ -68,7 +68,7 @@ fxLayoutGap.xs="0">
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-          <mat-list *ngFor="let comment of dish.comment" style="font-size: 8;">
+          <mat-list *ngFor="let comment of dish.comments" style="font-size: 8;">
              
               <mat-list-item >{{comment["comment"]}} </mat-list-item>
               <mat-list-item>{{comment["rating"]}} star{{ (comment["rating"]>1?"s":"")}}  </mat-list-item>

@@ -83,7 +83,9 @@ export class DishdetailComponent implements OnInit {
     ngOnInit() {
         const id = +this.route.snapshot.params['id'];
 
-        this.dishservice.getDish(id).subscribe(dish =>{ this.dish = dish},  errmess => this.errMess = <any>errmess);
+        this.dishservice.getDish(id).subscribe(dish =>{ this.dish = dish
+        ;this.dishcopy=dish;
+        },  errmess => this.errMess = <any>errmess);
 
         this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
         this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
@@ -91,13 +93,13 @@ export class DishdetailComponent implements OnInit {
   
 
 
-       
-    
-    }
-
-
+      }
     
 
+
+
+    
+    dishcopy: Dish;
     dish: Dish;
     dishIds:string[];
     prev:any;
@@ -216,9 +218,10 @@ export class DishdetailComponent implements OnInit {
         this.previewComment.date=String(new Date());
         console.log(this.previewComment);
         
-        this.dish.comment.push(this.previewComment);
-        console.log(this.dish.comment);
-
+        console.log(this.dish);
+        this.dish.comments.push(this.previewComment);
+        console.log(this.dish);
+        alert("Votre Commentaire a été posté avec succès; Nous vous en remercions!");
 
         this.commentForm.reset({
           author: '',
@@ -227,7 +230,13 @@ export class DishdetailComponent implements OnInit {
         });
         
         this.commentFormDirective.resetForm();
-        alert("Votre Commentaire a été posté avec succès; Nous vous en remercions!")
+        
+        this.dishcopy.comments.push(this.previewComment);
+        this.dishservice.putDish(this.dishcopy)
+          .subscribe(dish => {
+            this.dish = dish; this.dishcopy = dish;
+          },
+          errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
         
       }
       
